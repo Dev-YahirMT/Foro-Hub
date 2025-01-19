@@ -2,6 +2,7 @@ package com.codigoprueba.ForoHub.domain.topico;
 
 import com.codigoprueba.ForoHub.domain.usuario.Usuario;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -27,6 +28,14 @@ public class Topico {
     @ManyToOne
     @JoinColumn(name = "autor")
     private Usuario autor;
+
+    public Topico(DatosRegistroTopico datosRegistroTopico, Usuario usuario) {
+        this.titulo = datosRegistroTopico.titulo();
+        this.mensaje = datosRegistroTopico.mensaje();
+        this.fechaCreacion = LocalDateTime.now();
+        this.status = datosRegistroTopico.status();
+        this.autor = usuario;
+    }
 
     public Long getId() {
         return id;
@@ -60,7 +69,7 @@ public class Topico {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public Enum<Status> getStatus() {
+    public Status getStatus() {
         return status;
     }
 
